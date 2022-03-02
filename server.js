@@ -15,6 +15,6 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/pizza-hun
     useUnifiedTopology: true
 });
 
-mongoose.set('debug', true); //use this to log mongo queries being executed!
+// mongoose.set('debug', true); //use this to log mongo queries being executed!
 
 app.listen(PORT, () => console.log(`🌍 Connected on localhost:${PORT}`));
