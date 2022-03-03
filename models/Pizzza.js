@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, Types } = require('mongoose');
 
 const PizzaSchema = new Schema({
     pizzaName: {
@@ -18,7 +18,7 @@ const PizzaSchema = new Schema({
     toppings: [],
     comments: [
         {
-            type: Schema.Types.ObjectsId,
+            type: Schema.Types.ObjectId,
             ref: 'Comment'
         }
     ],
