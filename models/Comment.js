@@ -37,7 +37,7 @@ const commentSchema = new Schema({
     replies: [replySchema],
     toJSON: {
         virtuals: true, 
-        getters: true
+        getters: true,
         },
         id: false
     
