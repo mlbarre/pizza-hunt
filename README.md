@@ -19,4 +19,4 @@ this project doesn't include jest to be tested.
 ## repo & deployment
 * ( ◑‿◑)ɔ┏🍟--🍔┑٩(^◡^ )
 * [repository](https://github.com/mlbarre/pizza-hunt)
-* [heroku deploy]
+* [heroku deploy](https://damp-ravine-93214.herokuapp.com/)
