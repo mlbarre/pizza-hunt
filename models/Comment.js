@@ -1,52 +1,61 @@
 const { Schema, model, Types } = require('mongoose');
 const dateFormat = require('../utils/dateFormat');
 
-const replySchema = new Schema(
-    {
-        // set custom id to avoid cusfusion with parent comment_id
-        replyBody: {
-            type: Schema.Types.ObjectId,
-            default: () => new Types.ObjectId()
-        },
-        writtenBy: {
-            type: String
-        },
-        createdAt: {
-            type: Date,
-            default: Date.now,
-            get: createdAtVal => dateFormat(createdAtVal)
-        },
-        toJSON: {
-            getters: true
-            },
-    }
-);
-
-const commentSchema = new Schema({
-    writtenBy: {
-        type: String
+const ReplySchema = new Schema(
+  {
+    // set custom id to avoid confusion with parent comment _id
+    replyId: {
+      type: Schema.Types.ObjectId,
+      default: () => new Types.ObjectId()
     },
-    commentBody: {
-        type: String
+    replyBody: {
+      type: String
+    },
+    writtenBy: {
+      type: String
     },
     createdAt: {
-        type: Date,
-        default: Date.now,
-        get: createdAtVal => dateFormat(createdAtVal)
-    },
-    replies: [replySchema],
+      type: Date,
+      default: Date.now,
+      get: createdAtVal => dateFormat(createdAtVal)
+    }
+  },
+  {
     toJSON: {
-        virtuals: true, 
-        getters: true,
-        },
-        id: false
-    
+      getters: true
+    }
+  }
+);
+
+const CommentSchema = new Schema(
+  {
+    writtenBy: {
+      type: String
+    },
+    commentBody: {
+      type: String
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+      get: createdAtVal => dateFormat(createdAtVal)
+    },
+    // use ReplySchema to validate data for a reply
+    replies: [ReplySchema]
+  },
+  {
+    toJSON: {
+      virtuals: true,
+      getters: true
+    },
+    id: false
+  }
+);
+
+CommentSchema.virtual('replyCount').get(function() {
+  return this.replies.length;
 });
 
-commentSchema.virtual('replyCount').get(function() {
-    return this.replies.length;
-});
-
-const Comment = model('Comment', commentSchema);
+const Comment = model('Comment', CommentSchema);
 
 module.exports = Comment;
